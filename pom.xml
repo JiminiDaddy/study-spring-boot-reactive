@@ -12,6 +12,7 @@
     <description>스프링부트 실전활용 마스터 스터디</description>
     <modules>
         <module>ch01</module>
+        <module>ch02</module>
     </modules>
 
     <parent>
@@ -42,6 +43,11 @@
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 

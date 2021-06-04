@@ -1,0 +1,6 @@
+spring:
+  webflux:
+    hiddenmethod:
+      filter:
+        # hidden속성을 @DeleteMapping이 붙은 컨트롤러 메서드로 요청을 전달하는 특수 필터를 활성화시킨다. (default: false)
+        enabled: true
