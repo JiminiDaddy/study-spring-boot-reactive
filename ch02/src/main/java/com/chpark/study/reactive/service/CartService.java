@@ -56,4 +56,8 @@ public class CartService {
 			// 장바구니는 1개 혹은 0개뿐이므로 Mono<Cart> 형태로 반환된다.
 			.flatMap(cartRepository::save);
 	}
+
+	public Mono<Void> deleteItem(String itemId) {
+		return itemRepository.deleteById(itemId);
+	}
 }

@@ -3,6 +3,7 @@ package com.chpark.study.reactive.web;
 import com.chpark.study.reactive.domain.*;
 import com.chpark.study.reactive.service.CartService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,5 +37,11 @@ public class HomeController {
     Mono<String> addToCart(@PathVariable(name = "id") String itemId) {
         Mono<Cart> cart = cartService.addItemToCart(DEFAULT_CART_ID, itemId);
         return cart.thenReturn("redirect:/");
+    }
+
+    // 상품 제거
+    @DeleteMapping("/delete/{id}")
+    Mono<String> deleteItem(@PathVariable(name = "id") String itemId) {
+        return cartService.deleteItem(itemId).thenReturn("redirect:/");
     }
 }
