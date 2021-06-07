@@ -4,15 +4,22 @@ import com.chpark.study.reactive.domain.Item;
 import com.chpark.study.reactive.domain.ItemRepository;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.mongodb.core.ReactiveFluentMongoOperations;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+
+import static org.springframework.data.mongodb.core.query.Criteria.byExample;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
 
 @Service
 public class ItemService {
 	private final ItemRepository itemRepository;
+	private final ReactiveFluentMongoOperations fluentMongoOperations;
 
-	public ItemService(ItemRepository itemRepository) {
+	public ItemService(ItemRepository itemRepository, ReactiveFluentMongoOperations fluentMongoOperations) {
 		this.itemRepository = itemRepository;
+		this.fluentMongoOperations = fluentMongoOperations;
 	}
 
 	public Flux<Item> searchByExample(String name, String description, boolean useAnd) {
@@ -35,5 +42,33 @@ public class ItemService {
 		Example<Item> probe = Example.of(item, matcher);
 		// 검색 조건에 해당하는 모든 상품을 검색한다.
 		return itemRepository.findAll(probe);
+	}
+
+	public Flux<Item> searchByFluentExample(String name, String description) {
+		// 평문형 연산(Fluent operation)에서는 부분 일치 기능 및 null 필드에 대한 검색 기능은 사용할 수 없다.
+		return fluentMongoOperations.query(Item.class)
+			.matching(query(
+				//where("Keyboard").is(name).and("Keychrone_bluetooth_keyboard").is(description)))
+				where("Keyboard").is(name)))
+			.all();
+		/*  위 API를 MongoDB Query로 변환하면 아래와 같다.
+			{ $and: [ { name: 'Keyboard' },
+					  { description: 'Keychone bluetooth keyboard' }
+					]
+			};
+		 */
+	}
+
+	public Flux<Item> searchByFluentExample(String name, String description, boolean useAnd) {
+		Item item = new Item(name, description, 0.0);
+		ExampleMatcher matcher = (useAnd
+			? ExampleMatcher.matchingAll()
+			: ExampleMatcher.matching())
+				.withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
+				.withIgnoreCase()
+				.withIgnorePaths("price");
+		return fluentMongoOperations.query(Item.class)
+			.matching(query(byExample(Example.of(item, matcher))))
+			.all();
 	}
 }

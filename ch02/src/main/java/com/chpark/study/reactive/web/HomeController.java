@@ -59,4 +59,23 @@ public class HomeController {
             .modelAttribute("results", itemService.searchByExample(name, description, useAnd))
             .build());
     }
+
+    // 상품 검색 (/search와 동일한 기능을 수행하되 Fluent Operation 사용)
+    @GetMapping("/search2")
+    Mono<Rendering> search2(@RequestParam(required = false) String name,
+                           @RequestParam(required = false) String description,
+                           @RequestParam boolean useAnd) {
+        return Mono.just(Rendering.view(VIEW_NAME_SEARCH)
+            .modelAttribute("results", itemService.searchByFluentExample(name, description, useAnd))
+            .build());
+    }
+
+    // 상품 검색(Fluent Operation을 사용하여 특정 도메인만 검색)
+    @GetMapping("/search3")
+    Mono<Rendering> search3(@RequestParam String name,
+                            @RequestParam String description) {
+       return Mono.just(Rendering.view(VIEW_NAME_SEARCH)
+           .modelAttribute("results", itemService.searchByFluentExample(name, description))
+           .build());
+    }
 }

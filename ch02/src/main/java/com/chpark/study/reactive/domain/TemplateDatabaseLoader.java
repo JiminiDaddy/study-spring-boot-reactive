@@ -16,11 +16,11 @@ public class TemplateDatabaseLoader {
     CommandLineRunner initialize(MongoOperations mongoOperations) {
         System.out.println("TemplateDatabaseLoader.initialize");
         return (args) -> {
-            mongoOperations.save(new Item("MackBookPro","Apple's Mackboo Pro 15inch!",  2_000_000));
+            mongoOperations.save(new Item("MacBookPro","Apple's Macbook Pro 15inch!",  2_000_000));
             mongoOperations.save(new Item("4K Monitor", "Development Best Monitor",  500_000));
             mongoOperations.save(new Item("SpringBoot Book", "Spring Bible book", 40_000));
             mongoOperations.save(new Item("TV", "Samsung UHD 75Inch TV", 3_500_000));
-            mongoOperations.save(new Item("Keyboard", "Keychone bluetooth keyboard",  120_000));
+            mongoOperations.save(new Item("Keyboard", "Keychrone_bluetooth_keyboard",  120_000));
        };
     }
 }
