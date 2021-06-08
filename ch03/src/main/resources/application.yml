@@ -1,0 +1,33 @@
+spring:
+  webflux:
+    hiddenmethod:
+      filter:
+        # hidden속성을 @DeleteMapping이 붙은 컨트롤러 메서드로 요청을 전달하는 특수 필터를 활성화시킨다. (default: false)
+        enabled: true
+  # IntelliJ Idea를 사용할 경우 아래 설정 외에 별도로 IDE 설정이 필요하다.
+  # CMD + SHIFT + A 눌러서 Registry Menu로 들어간 다음, compiler.automake.allow.when.app.running 옵션을 활성화 해야 한다.
+  # Preference > Build, Execution, Deployment > Compiler > Build Project Automatically 를 활성화 해야 한다.
+  devtools:
+    restart:
+      # enable: false로 설정할경우 devtools에 의한 재시작을 하지 않는다.
+      enabled: true
+      # exclude에 설정한 경로 외 모든 파일의 변경은 재시작을 한다.
+      exclude:
+
+    livereload:
+      enabled: true
+
+  thymeleaf:
+    # 운영 환경에서는 true로 설정하지만, 개발 환경은 지속적으로 개발하는 단계이므로 caching을 꺼두는게 편리하다.
+    # 하지만 운영/개발용 프로파일이 별도로 필요하기때문에 보통 기본값을 사용하며, 기본값은 개발 모드이다.
+    cache: false
+
+logging:
+  level:
+    # web 로깅 그룹에 대해 출력할 level 적용
+    web: debug
+    com:
+      chpark:
+        study:
+          reactive: debug
+
