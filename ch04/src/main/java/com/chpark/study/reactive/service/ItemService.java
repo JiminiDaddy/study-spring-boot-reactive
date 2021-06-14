@@ -1,17 +1,11 @@
 package com.chpark.study.reactive.service;
 
-import com.chpark.study.reactive.domain.CartRepository;
 import com.chpark.study.reactive.domain.Item;
 import com.chpark.study.reactive.domain.ItemRepository;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.mongodb.core.ReactiveFluentMongoOperations;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
-
-import static org.springframework.data.mongodb.core.query.Criteria.byExample;
-import static org.springframework.data.mongodb.core.query.Criteria.where;
-import static org.springframework.data.mongodb.core.query.Query.query;
 
 @Service
 public class ItemService {
